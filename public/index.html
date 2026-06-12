@@ -24,8 +24,12 @@
     <!-- 1열: 상태 카드 3개 -->
     <section class="row cards-3">
       <article class="card" id="card-5h">
-        <div class="card-head">
-          <h2>5시간 윈도우 <span class="badge">추정치 · Code 기준</span> <span class="calib" id="calib-5h"></span></h2>
+        <div class="card-head vstack">
+          <h2>5시간 윈도우</h2>
+          <div class="head-badges">
+            <span class="badge">추정치 · Code 기준</span>
+            <span class="calib" id="calib-5h"></span>
+          </div>
         </div>
         <div class="big" id="fh-used">–</div>
         <div class="muted" id="fh-sub">세션 블록 기준</div>
@@ -38,8 +42,12 @@
       </article>
 
       <article class="card" id="card-week">
-        <div class="card-head">
-          <h2>주간 한도 <span class="badge">추정치 · Code 기준</span> <span class="calib" id="calib-week"></span></h2>
+        <div class="card-head vstack">
+          <h2>주간 한도</h2>
+          <div class="head-badges">
+            <span class="badge">추정치 · Code 기준</span>
+            <span class="calib" id="calib-week"></span>
+          </div>
         </div>
         <div class="big" id="wk-used">–</div>
         <div class="muted" id="wk-sub">이번 주(월요일 시작) 누적</div>
@@ -53,8 +61,11 @@
       </article>
 
       <article class="card" id="card-pace">
-        <div class="card-head">
-          <h2>페이스 <span class="badge">5시간 윈도우</span></h2>
+        <div class="card-head vstack">
+          <h2>페이스</h2>
+          <div class="head-badges">
+            <span class="badge">5시간 윈도우 기준</span>
+          </div>
         </div>
         <div class="pace-label" id="pace-label">–</div>
         <div class="pace-desc" id="pace-desc">현재 윈도우 소진 속도를 계산합니다.</div>
