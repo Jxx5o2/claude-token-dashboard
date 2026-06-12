@@ -1,0 +1,30 @@
+# 의존성
+node_modules/
+
+# 잠금 파일(의존성이 없으므로 불필요)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 사용 데이터 / 덤프 (개인 토큰·대화 기록이 담길 수 있는 산출물은 절대 커밋하지 않음)
+*.jsonl
+usage*.json
+*.dump
+dump*.json
+*.log
+data/
+.cache/
+
+# 환경 변수
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 에디터
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claude Code 토큰 사용량</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="page-head">
+      <h1>Claude Code 토큰 사용량</h1>
+      <div class="sub" id="head-sub">불러오는 중…</div>
+    </header>
+
+    <div class="notice" id="notice" hidden></div>
+
+    <!-- 1열: 상태 카드 3개 -->
+    <section class="row cards-3">
+      <article class="card" id="card-5h">
+        <div class="card-head">
+          <h2>5시간 윈도우 <span class="badge">추정치</span></h2>
+        </div>
+        <div class="big" id="fh-used">–</div>
+        <div class="muted" id="fh-sub">세션 블록 기준</div>
+        <div class="bar"><div class="bar-fill" id="fh-bar"></div></div>
+        <div class="bar-meta">
+          <span id="fh-ratio">잔여 –</span>
+          <span id="fh-reset">리셋까지 –</span>
+        </div>
+      </article>
+
+      <article class="card" id="card-week">
+        <div class="card-head">
+          <h2>주간 한도 <span class="badge">추정치</span></h2>
+        </div>
+        <div class="big" id="wk-used">–</div>
+        <div class="muted" id="wk-sub">이번 주(월요일 시작) 누적</div>
+        <div class="bar"><div class="bar-fill" id="wk-bar"></div></div>
+        <div class="bar-meta">
+          <span id="wk-ratio">– / –</span>
+          <span id="wk-days">리셋까지 –</span>
+        </div>
+        <div class="aux" id="wk-pace">주간 페이스 –</div>
+      </article>
+
+      <article class="card" id="card-pace">
+        <div class="card-head">
+          <h2>페이스 <span class="badge">5시간 윈도우</span></h2>
+        </div>
+        <div class="pace-label" id="pace-label">–</div>
+        <div class="pace-desc" id="pace-desc">현재 윈도우 소진 속도를 계산합니다.</div>
+        <div class="pace-track">
+          <div class="pace-tick" id="pace-elapsed" title="윈도우 경과"></div>
+          <div class="pace-used" id="pace-used"></div>
+        </div>
+        <div class="bar-meta">
+          <span id="pace-e">경과 –</span>
+          <span id="pace-u">소진 –</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- 2열: 잔디 히트맵 -->
+    <section class="row">
+      <article class="card" id="card-heat">
+        <div class="card-head">
+          <h2>활동 히트맵 <span class="muted-inline">최근 6개월</span></h2>
+          <div class="heat-stats">
+            <div><span class="hs-num" id="hs-cur">–</span><span class="hs-lab">현재 streak</span></div>
+            <div><span class="hs-num" id="hs-long">–</span><span class="hs-lab">최장 streak</span></div>
+            <div><span class="hs-num" id="hs-max">–</span><span class="hs-lab">최다 사용일</span></div>
+          </div>
+        </div>
+        <div class="heat-scroll">
+          <div class="heat-grid" id="heat-grid"></div>
+        </div>
+        <div class="heat-legend">
+          <span class="muted">적음</span>
+          <span class="lv lv0"></span><span class="lv lv1"></span>
+          <span class="lv lv2"></span><span class="lv lv3"></span><span class="lv lv4"></span>
+          <span class="muted">많음</span>
+        </div>
+        <div class="day-panel" id="day-panel" hidden>
+          <div class="day-panel-head">
+            <strong id="dp-date">–</strong>
+            <button class="dp-close" id="dp-close">닫기 ✕</button>
+          </div>
+          <div class="dp-list" id="dp-list"></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 3열: 프로젝트별 비중 -->
+    <section class="row">
+      <article class="card" id="card-proj">
+        <div class="card-head">
+          <h2>프로젝트별 비중 <span class="muted-inline">이번 달</span></h2>
+        </div>
+        <div class="stack" id="proj-stack"></div>
+        <div class="legend" id="proj-legend"></div>
+      </article>
+    </section>
+
+    <footer class="foot" id="foot"></footer>
+  </main>
+
+  <div class="tooltip" id="tooltip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

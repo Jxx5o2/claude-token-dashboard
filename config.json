@@ -1,0 +1,19 @@
+{
+  "_comment_limits": "FIVE_HOUR_LIMIT / WEEKLY_LIMIT 는 공식 수치가 아닌 임의 placeholder 입니다. Claude Code에서 /usage 명령으로 확인한 실측 한도값으로 직접 보정하세요. 단위: 가중 토큰(weighted) 기준.",
+  "_comment_weighted": "weighted = input + output + cache_creation + cache_read * CACHE_READ_FACTOR. 카드/히트맵/프로젝트 비중의 모든 토큰 수치는 이 가중 토큰 기준입니다.",
+  "_comment_pricing": "PRICING_PER_MTOK 는 비용($) 추정 전용이며 토큰 가중치와 무관하게 실제 token 수로 계산합니다. 단위: USD per 1M tokens.",
+
+  "plan": "Pro",
+  "CACHE_READ_FACTOR": 0.1,
+
+  "FIVE_HOUR_LIMIT": 5000000,
+  "WEEKLY_LIMIT": 50000000,
+
+  "PRICING_PER_MTOK": {
+    "opus":    { "input": 15, "output": 75, "cache_write": 18.75, "cache_read": 1.5 },
+    "sonnet":  { "input": 3,  "output": 15, "cache_write": 3.75,  "cache_read": 0.3 },
+    "haiku":   { "input": 0.8, "output": 4, "cache_write": 1.0,   "cache_read": 0.08 },
+    "fable":   { "input": 10, "output": 50, "cache_write": 12.5,  "cache_read": 1 },
+    "default": { "input": 15, "output": 75, "cache_write": 18.75, "cache_read": 1.5 }
+  }
+}

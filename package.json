@@ -1,0 +1,22 @@
+{
+  "name": "claude-token-dashboard",
+  "version": "1.1.0",
+  "description": "Claude Code 토큰 사용량 대시보드 — 각자 PC의 ~/.claude/projects 를 읽어 로컬에서 보는 도구",
+  "bin": {
+    "claude-token-dashboard": "server.js"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "server.js",
+    "config.json",
+    "public"
+  ],
+  "keywords": ["claude", "claude-code", "token", "usage", "dashboard"],
+  "license": "MIT"
+}
