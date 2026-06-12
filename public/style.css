@@ -175,7 +175,9 @@ body {
 .legend-row .tk { color: var(--muted); font-variant-numeric: tabular-nums; }
 .legend-row .pc { font-variant-numeric: tabular-nums; min-width: 48px; text-align: right; }
 
-.foot { color: var(--muted); font-size: 12px; margin-top: 24px; }
+.foot { color: var(--muted); font-size: 12px; margin-top: 24px; line-height: 1.7; }
+.foot code { background: #eef2f7; padding: 1px 5px; border-radius: 5px; }
+.scope-note .dim { color: #9ca3af; }
 
 /* tooltip */
 .tooltip {
