@@ -31,6 +31,19 @@ body {
 .page-head h1 { font-size: 20px; margin: 0 0 4px; font-weight: 650; }
 .page-head .sub { color: var(--muted); font-size: 13px; }
 
+.scope-badge {
+  font-size: 11px; font-weight: 500; color: #1e40af;
+  background: #eff6ff; border: 1px solid #bfdbfe;
+  border-radius: 999px; padding: 1px 8px; vertical-align: middle;
+}
+.scope-note {
+  background: #f8fafc; border: 1px solid var(--border); color: var(--muted);
+  border-radius: 12px; padding: 11px 14px; margin-bottom: 18px; font-size: 12.5px; line-height: 1.55;
+}
+.scope-note strong { color: var(--text); }
+.scope-note code { background: #eef2f7; padding: 1px 6px; border-radius: 5px; }
+.scope-mini { margin-top: 6px; font-size: 11.5px; color: #9ca3af; }
+
 .notice {
   background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
   border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; font-size: 13px;

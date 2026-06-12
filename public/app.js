@@ -245,7 +245,9 @@ function renderProjects(pr) {
 
 function renderFoot(d) {
   document.getElementById('foot').textContent =
-    `한도값은 placeholder 추정치입니다. config.json에서 /usage 실측값으로 보정하세요. · `
+    `집계 범위: Claude Code 사용량만 (claude.ai 웹·데스크톱 미포함, 별도 집계 불가). · `
+    + `전체 구독 한도 현황은 Claude Code /usage 또는 claude.ai에서 확인. · `
+    + `한도값은 placeholder 추정치 — config.json에서 /usage 실측값으로 보정하세요. · `
     + `5시간 윈도우 = ccusage식 세션 블록 · 토큰은 가중 합산 기준.`;
 }
 

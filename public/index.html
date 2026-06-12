@@ -9,9 +9,15 @@
 <body>
   <main class="wrap">
     <header class="page-head">
-      <h1>Claude Code 토큰 사용량</h1>
+      <h1>Claude Code 토큰 사용량 <span class="scope-badge">Claude Code 기준</span></h1>
       <div class="sub" id="head-sub">불러오는 중…</div>
     </header>
+
+    <div class="scope-note">
+      이 대시보드는 <strong>Claude Code 사용량만</strong> 집계합니다.
+      claude.ai 웹·데스크톱 앱에서 쓴 토큰은 <strong>포함되지 않습니다</strong>(로컬 기록·조회 API가 없어 별도 집계 불가).
+      전체 구독 한도 현황은 Claude Code <code>/usage</code> 또는 claude.ai에서 확인하세요.
+    </div>
 
     <div class="notice" id="notice" hidden></div>
 
@@ -19,10 +25,11 @@
     <section class="row cards-3">
       <article class="card" id="card-5h">
         <div class="card-head">
-          <h2>5시간 윈도우 <span class="badge">추정치</span></h2>
+          <h2>5시간 윈도우 <span class="badge">추정치 · Code 기준</span></h2>
         </div>
         <div class="big" id="fh-used">–</div>
         <div class="muted" id="fh-sub">세션 블록 기준</div>
+        <div class="scope-mini">웹·데스크톱 사용분 미포함</div>
         <div class="bar"><div class="bar-fill" id="fh-bar"></div></div>
         <div class="bar-meta">
           <span id="fh-ratio">잔여 –</span>
@@ -32,10 +39,11 @@
 
       <article class="card" id="card-week">
         <div class="card-head">
-          <h2>주간 한도 <span class="badge">추정치</span></h2>
+          <h2>주간 한도 <span class="badge">추정치 · Code 기준</span></h2>
         </div>
         <div class="big" id="wk-used">–</div>
         <div class="muted" id="wk-sub">이번 주(월요일 시작) 누적</div>
+        <div class="scope-mini">웹·데스크톱 사용분 미포함</div>
         <div class="bar"><div class="bar-fill" id="wk-bar"></div></div>
         <div class="bar-meta">
           <span id="wk-ratio">– / –</span>
