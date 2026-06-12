@@ -56,7 +56,7 @@ function modelFamily(model) {
   return 'default';
 }
 function familyLabel(fam) {
-  return { opus: 'Opus', sonnet: 'Sonnet', haiku: 'Haiku', default: '기타' }[fam] || fam;
+  return { opus: 'Opus', sonnet: 'Sonnet', haiku: 'Haiku', fable: 'Fable', default: '기타' }[fam] || fam;
 }
 
 function lastFolder(cwd) {

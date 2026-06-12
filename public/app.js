@@ -14,7 +14,7 @@ function fmtCost(c) {
 }
 function fmtPct(p) { return (p || 0).toFixed(1) + '%'; }
 function famLabel(f) {
-  return ({ opus: 'Opus', sonnet: 'Sonnet', haiku: 'Haiku', default: '기타' })[f] || f;
+  return ({ opus: 'Opus', sonnet: 'Sonnet', haiku: 'Haiku', fable: 'Fable', default: '기타' })[f] || f;
 }
 function fmtDuration(ms) {
   if (ms == null) return '–';
