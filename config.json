@@ -12,8 +12,8 @@
   "FIVE_HOUR_LIMIT": 15735238,
   "WEEKLY_LIMIT": 10949643,
 
-  "calibrated": false,
-  "calibratedAt": null,
+  "calibrated": true,
+  "calibratedAt": "2026-06-12",
 
   "PRICING_PER_MTOK": {
     "opus":    { "input": 15, "output": 75, "cache_write": 18.75, "cache_read": 1.5 },
