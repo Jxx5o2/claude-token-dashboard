@@ -54,6 +54,7 @@ async function load() {
   }
   DATA = data;
   renderNotice(data.meta);
+  renderCalibration(data.config);
   renderHead(data);
   renderFiveHour(data.fiveHour);
   renderWeekly(data.weekly);
@@ -77,6 +78,49 @@ function renderNotice(meta) {
   }
   el.hidden = false;
 }
+
+function renderCalibration(cfg) {
+  const slots = [document.getElementById('calib-5h'), document.getElementById('calib-week')];
+  if (cfg && cfg.calibrated) {
+    let when = '';
+    if (cfg.calibratedAt) {
+      const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(cfg.calibratedAt);
+      if (m) when = `${Number(m[2])}월 ${Number(m[3])}일 `;
+    }
+    slots.forEach(el => { el.innerHTML = `<span class="calib-badge ok">${when}보정됨</span>`; });
+  } else {
+    slots.forEach(el => {
+      el.innerHTML = `<button class="calib-badge warn" type="button">기본값 사용 중 · 보정 권장</button>`;
+      el.querySelector('button').addEventListener('click', toggleCalibPanel);
+    });
+  }
+}
+
+function toggleCalibPanel() {
+  const row = document.getElementById('calib-panel-row');
+  row.hidden = !row.hidden;
+  if (!row.hidden) row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+document.getElementById('calib-close').addEventListener('click', () => {
+  document.getElementById('calib-panel-row').hidden = true;
+});
+document.getElementById('calib-copy').addEventListener('click', async (e) => {
+  const text = document.getElementById('calib-template').textContent;
+  const btn = e.currentTarget;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    // 폴백: 선택 후 execCommand
+    const r = document.createRange();
+    r.selectNodeContents(document.getElementById('calib-template'));
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    try { document.execCommand('copy'); } catch (e2) {}
+    sel.removeAllRanges();
+  }
+  btn.textContent = '복사됨 ✓';
+  btn.classList.add('done');
+  setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('done'); }, 1800);
+});
 
 function renderHead(d) {
   const sub = document.getElementById('head-sub');

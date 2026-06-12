@@ -75,14 +75,28 @@ claude-token-dashboard
 | 브라우저 자동 열기 끄기 | `node server.js --no-open` |
 
 ## 한도값 보정 (중요)
-`config.json` 의 `FIVE_HOUR_LIMIT` / `WEEKLY_LIMIT` 는 **공식 수치가 아닌 임의 placeholder**입니다.
-Claude Code에서 `/usage` 로 확인한 실측 한도값으로 직접 바꾸세요.
+`config.json` 의 `FIVE_HOUR_LIMIT` / `WEEKLY_LIMIT` 는 **공식 수치가 아닌 추정값**입니다.
+`/usage` 의 퍼센트로 역산해 본인 플랜에 맞게 1회 보정하세요. 보정 전에는
+①·②카드에 **「기본값 사용 중 · 보정 권장」** 배지가 뜨고, 클릭하면 아래 절차와
+복사용 프롬프트 템플릿이 패널로 펼쳐집니다.
+
+**보정 3단계**
+1. Claude Code에서 `/usage` 실행 → **Session(5hr) %**, **Weekly(7day) %**, **플랜** 확인 (확인 시각도 메모)
+2. 카드 배지를 눌러 나온 **보정 프롬프트 템플릿**을 복사 → 빈칸(%·시각·플랜)을 채워 Claude Code에 붙여넣기
+3. Claude가 그 시각까지의 weighted 합계를 역산해 한도값과 보정 상태를 갱신 → 브라우저 새로고침
+
+> 역산 산식: `FIVE_HOUR_LIMIT = (그 시각까지 5시간 윈도우 weighted) / (Session %)`,
+> `WEEKLY_LIMIT = (이번 주 weighted) / (Weekly %)`. 정수 퍼센트 반올림 +
+> weighted 지표가 Anthropic 내부 한도 계산과 달라 **거친 보정**이며, 퍼센트가 높을 때
+> 재보정하면 더 정확해집니다.
 
 ```jsonc
 {
   "CACHE_READ_FACTOR": 0.1,        // weighted = input+output+cache_create + cache_read*이 값
-  "FIVE_HOUR_LIMIT": 5000000,      // ← /usage 실측치로 보정
-  "WEEKLY_LIMIT": 50000000,        // ← /usage 실측치로 보정
+  "FIVE_HOUR_LIMIT": 5000000,      // ← /usage 로 역산 보정
+  "WEEKLY_LIMIT": 50000000,        // ← /usage 로 역산 보정
+  "calibrated": false,             // 보정 완료 시 true → 카드에 "M월 D일 보정됨" 표시
+  "calibratedAt": null,            // 보정 날짜 ISO (예: "2026-06-12")
   "PRICING_PER_MTOK": { ... }      // 비용($) 추정 단가 (per 1M tokens)
 }
 ```
@@ -92,6 +106,7 @@ Claude Code에서 `/usage` 로 확인한 실측 한도값으로 직접 바꾸세
 - 토큰은 **가중 합산**(`input + output + cache_creation + cache_read×0.1`) 기준
 - 5시간 윈도우는 ccusage식 **세션 블록**(직전 블록 종료/5h 갭 이후 첫 활동의 정시 내림 = 새 블록 시작)
 - 날짜·주 시작·윈도우 계산은 모두 **실행 PC의 로컬 시간** 기준
+- 프로젝트 비중에서 cwd가 홈 루트·Desktop·Downloads·Documents 인 세션은 이름 뒤에 **`(미분류)`** 표기
 
 ## 프라이버시
 JSONL 파일에는 토큰 수뿐 아니라 **대화 전문이 포함**됩니다.

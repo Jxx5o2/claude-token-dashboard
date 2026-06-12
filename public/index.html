@@ -25,7 +25,7 @@
     <section class="row cards-3">
       <article class="card" id="card-5h">
         <div class="card-head">
-          <h2>5시간 윈도우 <span class="badge">추정치 · Code 기준</span></h2>
+          <h2>5시간 윈도우 <span class="badge">추정치 · Code 기준</span> <span class="calib" id="calib-5h"></span></h2>
         </div>
         <div class="big" id="fh-used">–</div>
         <div class="muted" id="fh-sub">세션 블록 기준</div>
@@ -39,7 +39,7 @@
 
       <article class="card" id="card-week">
         <div class="card-head">
-          <h2>주간 한도 <span class="badge">추정치 · Code 기준</span></h2>
+          <h2>주간 한도 <span class="badge">추정치 · Code 기준</span> <span class="calib" id="calib-week"></span></h2>
         </div>
         <div class="big" id="wk-used">–</div>
         <div class="muted" id="wk-sub">이번 주(월요일 시작) 누적</div>
@@ -66,6 +66,39 @@
           <span id="pace-e">경과 –</span>
           <span id="pace-u">소진 –</span>
         </div>
+      </article>
+    </section>
+
+    <!-- 보정 안내 패널 (보정 권장 배지 클릭 시 펼침) -->
+    <section class="row" id="calib-panel-row" hidden>
+      <article class="card calib-panel">
+        <div class="card-head">
+          <h2>한도값 보정 방법</h2>
+          <button class="dp-close" id="calib-close">닫기 ✕</button>
+        </div>
+        <p class="muted" style="margin-top:0">
+          현재 카드의 한도는 <strong>기본 추정값</strong>입니다. 본인 플랜의 실제 한도에 맞추려면
+          Claude Code <code>/usage</code> 퍼센트로 1회 보정하세요.
+        </p>
+        <ol class="calib-steps">
+          <li>Claude Code에서 <code>/usage</code> 실행 → <strong>Session(5hr) %</strong>, <strong>Weekly(7day) %</strong>, <strong>플랜</strong> 확인 (확인한 시각도 기억)</li>
+          <li>아래 템플릿을 복사해 빈칸(%·시각·플랜)을 채운 뒤, Claude Code 채팅에 붙여넣기</li>
+          <li>Claude가 그 시각까지의 weighted 합계를 역산해 <code>config.json</code>의 <code>FIVE_HOUR_LIMIT</code>/<code>WEEKLY_LIMIT</code>과 <code>calibrated</code>/<code>calibratedAt</code>을 갱신 → 브라우저 새로고침</li>
+        </ol>
+        <div class="calib-tpl-head">
+          <span class="muted">보정 프롬프트 템플릿</span>
+          <button class="copy-btn" id="calib-copy">복사</button>
+        </div>
+        <pre class="calib-tpl" id="calib-template">한도값 보정할게. 방금 [HH:MM]에 /usage 확인한 결과:
+- Session (5hr): __%
+- Weekly (7 day): __%
+- 플랜: ____
+
+[HH:MM] 시점까지 기록된 토큰만으로 5시간 윈도우 weighted 합계와
+주간 weighted 합계를 계산해줘. 그 이후 기록은 합산에서 제외.
+위 퍼센트와 일치하도록 FIVE_HOUR_LIMIT과 WEEKLY_LIMIT을 역산해서
+config.json에 반영하고, calibrated=true / calibratedAt도 갱신해줘.
+계산 근거(기준 시각, 토큰 합계, 산식)도 보여줘.</pre>
       </article>
     </section>
 

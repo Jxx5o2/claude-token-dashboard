@@ -65,6 +65,22 @@ function lastFolder(cwd) {
   return parts.length ? parts[parts.length - 1] : cwd;
 }
 
+// 홈 루트 / Desktop / Downloads / Documents 처럼 특정 프로젝트로 보기 어려운 위치
+function normPath(p) {
+  return String(p || '').replace(/[\\/]+/g, '/').replace(/\/+$/, '').toLowerCase();
+}
+const HOME_NORM = normPath(os.homedir());
+const UNCLASSIFIED_DIRS = new Set([
+  HOME_NORM,
+  `${HOME_NORM}/desktop`,
+  `${HOME_NORM}/downloads`,
+  `${HOME_NORM}/documents`,
+]);
+function projectName(cwd) {
+  const name = lastFolder(cwd);
+  return UNCLASSIFIED_DIRS.has(normPath(cwd)) ? `${name} (미분류)` : name;
+}
+
 // local YYYY-MM-DD
 function localDateKey(d) {
   const y = d.getFullYear();
@@ -137,7 +153,7 @@ function loadRecords(cfg) {
         ts,
         date: localDateKey(new Date(ts)),
         model, fam,
-        project: lastFolder(d.cwd),
+        project: projectName(d.cwd),
         sessionId: d.sessionId || rid || 'unknown',
         input, output, cc, cr,
         weighted,
@@ -353,6 +369,8 @@ function aggregate(cfg, now) {
       cacheReadFactor: cfg.CACHE_READ_FACTOR,
       fiveHourLimit: cfg.FIVE_HOUR_LIMIT,
       weeklyLimit: cfg.WEEKLY_LIMIT,
+      calibrated: cfg.calibrated === true,
+      calibratedAt: cfg.calibratedAt || null,
     },
     meta: {
       totalRecords: records.length,

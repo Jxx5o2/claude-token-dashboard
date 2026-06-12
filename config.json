@@ -4,11 +4,16 @@
   "_comment_weighted": "weighted = input + output + cache_creation + cache_read * CACHE_READ_FACTOR. 카드/히트맵/프로젝트 비중의 모든 토큰 수치는 이 가중 토큰 기준입니다.",
   "_comment_pricing": "PRICING_PER_MTOK 는 비용($) 추정 전용이며 토큰 가중치와 무관하게 실제 token 수로 계산합니다. 단위: USD per 1M tokens.",
 
+  "_comment_calibrated": "calibrated=true 이면 카드에 'M월 D일 보정됨' 표시, false 면 '보정 권장' 배지 + 보정 안내 패널. calibratedAt 은 ISO 날짜(예: 2026-06-12) 또는 null.",
+
   "plan": "Claude Max",
   "CACHE_READ_FACTOR": 0.1,
 
   "FIVE_HOUR_LIMIT": 15735238,
   "WEEKLY_LIMIT": 10949643,
+
+  "calibrated": false,
+  "calibratedAt": null,
 
   "PRICING_PER_MTOK": {
     "opus":    { "input": 15, "output": 75, "cache_write": 18.75, "cache_read": 1.5 },
