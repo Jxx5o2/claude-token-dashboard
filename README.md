@@ -74,32 +74,41 @@ claude-token-dashboard
 | 〃 (환경변수) | `CLAUDE_PROJECTS_DIR=... npm start` |
 | 브라우저 자동 열기 끄기 | `node server.js --no-open` |
 
-## 한도값 보정 (중요)
-`config.json` 의 `FIVE_HOUR_LIMIT` / `WEEKLY_LIMIT` 는 **공식 수치가 아닌 추정값**입니다.
-`/usage` 의 퍼센트로 역산해 본인 플랜에 맞게 1회 보정하세요. 보정 전에는
-①·②카드에 **「기본값 사용 중 · 보정 권장」** 배지가 뜨고, 클릭하면 아래 절차와
-복사용 프롬프트 템플릿이 패널로 펼쳐집니다.
+## 한도값 보정 (선택)
+카드의 5시간/주간 한도는 **추정 기본값**입니다. 본인 플랜에 더 맞추고 싶으면,
+복잡한 계산 없이 **Claude Code에게 맡기면 됩니다.**
 
-**보정 3단계**
-1. Claude Code에서 `/usage` 실행 → **Session(5hr) %**, **Weekly(7day) %**, **플랜** 확인 (확인 시각도 메모)
-2. 카드 배지를 눌러 나온 **보정 프롬프트 템플릿**을 복사 → 빈칸(%·시각·플랜)을 채워 Claude Code에 붙여넣기
-3. Claude가 그 시각까지의 weighted 합계를 역산해 한도값과 보정 상태를 갱신 → 브라우저 새로고침
+1. Claude Code에서 **`/usage`** 실행
+2. 그 화면을 **스크린샷 찍어 Claude Code 채팅에 붙여넣기** (또는 Session/Weekly 퍼센트만 타이핑해도 됩니다)
+3. 이렇게 요청: **"이 `/usage` 기준으로 한도값 보정해줘. 확인 시각은 OO시 OO분이야."**
 
-> 역산 산식: `FIVE_HOUR_LIMIT = (그 시각까지 5시간 윈도우 weighted) / (Session %)`,
-> `WEEKLY_LIMIT = (이번 주 weighted) / (Weekly %)`. 정수 퍼센트 반올림 +
-> weighted 지표가 Anthropic 내부 한도 계산과 달라 **거친 보정**이며, 퍼센트가 높을 때
-> 재보정하면 더 정확해집니다.
+그러면 Claude가 그 시각까지의 사용량을 바탕으로 `config.json` 의 한도값과 보정 상태(`calibrated`)를
+알아서 갱신합니다. 끝나면 브라우저만 새로고침하세요.
 
+> 💡 필요한 건 **`/usage` 화면**과 **확인한 시각** 둘뿐입니다. 직접 계산할 건 없습니다.
+> 앱에서도 카드의 **「보정 권장」 배지**를 누르면 같은 안내와 복사용 프롬프트가 나옵니다.
+
+보정이 끝나면 카드 배지가 **「M월 D일 보정됨」** 으로 바뀝니다.
+
+<details>
+<summary>작동 원리 (안 읽어도 됩니다)</summary>
+
+Claude는 그 시각까지 기록된 토큰의 가중 합계를 구해 `/usage` 퍼센트로 한도를 역산합니다:
+`FIVE_HOUR_LIMIT = (그 시각까지 5시간 윈도우 weighted) / (Session %)`,
+`WEEKLY_LIMIT = (이번 주 weighted) / (Weekly %)`.
+정수 퍼센트 반올림 + weighted 지표가 Anthropic 내부 한도 계산과 정확히 같지는 않아
+**대략적인 보정**입니다. 퍼센트가 높을 때(예: 30~50%) 다시 보정하면 더 정확해집니다.
+
+`config.json` 에서 직접 수정할 수도 있습니다:
 ```jsonc
 {
-  "CACHE_READ_FACTOR": 0.1,        // weighted = input+output+cache_create + cache_read*이 값
-  "FIVE_HOUR_LIMIT": 5000000,      // ← /usage 로 역산 보정
-  "WEEKLY_LIMIT": 50000000,        // ← /usage 로 역산 보정
-  "calibrated": false,             // 보정 완료 시 true → 카드에 "M월 D일 보정됨" 표시
-  "calibratedAt": null,            // 보정 날짜 ISO (예: "2026-06-12")
-  "PRICING_PER_MTOK": { ... }      // 비용($) 추정 단가 (per 1M tokens)
+  "FIVE_HOUR_LIMIT": 5000000,   // 5시간 한도 (weighted 토큰)
+  "WEEKLY_LIMIT": 50000000,     // 주간 한도 (weighted 토큰)
+  "calibrated": false,          // true 면 카드에 "M월 D일 보정됨" 표시
+  "calibratedAt": null          // 보정 날짜 (예: "2026-06-12")
 }
 ```
+</details>
 
 ## 동작 메모
 - 같은 `requestId` 중복 행은 1건으로 dedup, `<synthetic>` 모델은 제외

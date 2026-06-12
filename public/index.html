@@ -77,28 +77,22 @@
           <button class="dp-close" id="calib-close">닫기 ✕</button>
         </div>
         <p class="muted" style="margin-top:0">
-          현재 카드의 한도는 <strong>기본 추정값</strong>입니다. 본인 플랜의 실제 한도에 맞추려면
-          Claude Code <code>/usage</code> 퍼센트로 1회 보정하세요.
+          현재 카드의 한도는 <strong>기본 추정값</strong>입니다. 복잡한 계산 없이
+          <strong>Claude Code에게 맡기면</strong> 됩니다. 필요한 건 <code>/usage</code> 화면과 확인한 시각뿐이에요.
         </p>
         <ol class="calib-steps">
-          <li>Claude Code에서 <code>/usage</code> 실행 → <strong>Session(5hr) %</strong>, <strong>Weekly(7day) %</strong>, <strong>플랜</strong> 확인 (확인한 시각도 기억)</li>
-          <li>아래 템플릿을 복사해 빈칸(%·시각·플랜)을 채운 뒤, Claude Code 채팅에 붙여넣기</li>
-          <li>Claude가 그 시각까지의 weighted 합계를 역산해 <code>config.json</code>의 <code>FIVE_HOUR_LIMIT</code>/<code>WEEKLY_LIMIT</code>과 <code>calibrated</code>/<code>calibratedAt</code>을 갱신 → 브라우저 새로고침</li>
+          <li>Claude Code에서 <code>/usage</code> 실행</li>
+          <li>그 화면을 <strong>스크린샷 찍어 Claude Code 채팅에 붙여넣기</strong> (또는 Session/Weekly 퍼센트만 타이핑)</li>
+          <li>아래 한 줄로 요청 → Claude가 <code>config.json</code> 한도값·보정 상태를 알아서 갱신 → 브라우저 새로고침</li>
         </ol>
         <div class="calib-tpl-head">
-          <span class="muted">보정 프롬프트 템플릿</span>
+          <span class="muted">이렇게 요청하세요 (복사해서 붙여넣기)</span>
           <button class="copy-btn" id="calib-copy">복사</button>
         </div>
-        <pre class="calib-tpl" id="calib-template">한도값 보정할게. 방금 [HH:MM]에 /usage 확인한 결과:
-- Session (5hr): __%
-- Weekly (7 day): __%
-- 플랜: ____
-
-[HH:MM] 시점까지 기록된 토큰만으로 5시간 윈도우 weighted 합계와
-주간 weighted 합계를 계산해줘. 그 이후 기록은 합산에서 제외.
-위 퍼센트와 일치하도록 FIVE_HOUR_LIMIT과 WEEKLY_LIMIT을 역산해서
-config.json에 반영하고, calibrated=true / calibratedAt도 갱신해줘.
-계산 근거(기준 시각, 토큰 합계, 산식)도 보여줘.</pre>
+        <pre class="calib-tpl" id="calib-template">이 /usage 기준으로 한도값 보정해줘.
+확인 시각은 [OO시 OO분]이야.
+config.json의 FIVE_HOUR_LIMIT / WEEKLY_LIMIT 과
+calibrated / calibratedAt 을 갱신하고, 근거도 알려줘.</pre>
       </article>
     </section>
 
