@@ -1,13 +1,14 @@
 {
-  "_comment_limits": "FIVE_HOUR_LIMIT / WEEKLY_LIMIT 는 공식 수치가 아닌 임의 placeholder 입니다. Claude Code에서 /usage 명령으로 확인한 실측 한도값으로 직접 보정하세요. 단위: 가중 토큰(weighted) 기준.",
+  "_comment_limits": "FIVE_HOUR_LIMIT / WEEKLY_LIMIT 는 공식 수치가 아닌 추정값입니다. Claude Code /usage 퍼센트로 역산해 보정합니다. 단위: 가중 토큰(weighted).",
+  "_comment_calibration": "2026-06-12 19:06(KST) /usage 스냅샷 기준 역산: Session 4% (weighted 629,410 / 0.04), Weekly 12% (weighted 1,313,957 / 0.12). 주의: 정수 퍼센트 반올림 + weighted 지표가 Anthropic 내부 한도 계산과 달라 거친 보정임. 퍼센트가 높을 때 재보정하면 더 정확해집니다.",
   "_comment_weighted": "weighted = input + output + cache_creation + cache_read * CACHE_READ_FACTOR. 카드/히트맵/프로젝트 비중의 모든 토큰 수치는 이 가중 토큰 기준입니다.",
   "_comment_pricing": "PRICING_PER_MTOK 는 비용($) 추정 전용이며 토큰 가중치와 무관하게 실제 token 수로 계산합니다. 단위: USD per 1M tokens.",
 
-  "plan": "Pro",
+  "plan": "Claude Max",
   "CACHE_READ_FACTOR": 0.1,
 
-  "FIVE_HOUR_LIMIT": 5000000,
-  "WEEKLY_LIMIT": 50000000,
+  "FIVE_HOUR_LIMIT": 15735238,
+  "WEEKLY_LIMIT": 10949643,
 
   "PRICING_PER_MTOK": {
     "opus":    { "input": 15, "output": 75, "cache_write": 18.75, "cache_read": 1.5 },
